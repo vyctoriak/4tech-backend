@@ -7,10 +7,16 @@ import { UserRepository } from './repositories/user-repository/user-repository';
 import { AuthController } from './controllers/auth/auth.controller';
 import { AuthService } from './services/auth/auth.service';
 import { secretKey, JwtStrategy } from './services/auth/jwt.strategy';
-import {JwtModule} from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017/admin',
+    {
+      useNewUrlParser: true, 
+      useUnifiedTopology: true
+    }),
     JwtModule.register({
       secret: secretKey, signOptions: {
         expiresIn: '1m',
