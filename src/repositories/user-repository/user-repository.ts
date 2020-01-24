@@ -18,6 +18,7 @@ export class UserRepository {
     }
 
     async createUser(newUser: UserViewModel) {
+        console.table(newUser);
         const user = this.userCollection(newUser);
         return await user.save();
 

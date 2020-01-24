@@ -12,6 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './domain/schemas/user.schema';
 import { UserActivityController } from './controllers/user-activity/user-activity.controller';
 import { UserActivitySchema } from './domain/schemas/user-activity.schema';
+import { UserActivityService } from './services/user-activity/user-activity.service';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import { UserActivitySchema } from './domain/schemas/user-activity.schema';
     })
   ],
   controllers: [AppController, UserController, AuthController, UserActivityController],
-  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy],
+  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService],
 })
 export class AppModule { }

@@ -18,7 +18,8 @@ export class AuthService {
         }
 
         return {
-            acess_token: this.JwtService.sign({ status: 'Authorized' })
+            acess_token: this.JwtService.sign({ status: 'Authorized' }),
+            userId: user._id
         };
 
         // if (user) {
