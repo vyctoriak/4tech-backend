@@ -9,6 +9,7 @@ import { AuthService } from './services/auth/auth.service';
 import { secretKey, JwtStrategy } from './services/auth/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema } from './domain/schemas/user.schema';
 
 @Module({
   imports: [
@@ -17,6 +18,9 @@ import { MongooseModule } from '@nestjs/mongoose';
       useNewUrlParser: true, 
       useUnifiedTopology: true
     }),
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+    ]),
     JwtModule.register({
       secret: secretKey, signOptions: {
         expiresIn: '1m',

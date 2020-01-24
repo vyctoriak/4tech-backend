@@ -12,9 +12,9 @@ export class UserService {
         return this.userRepository.getUsers();
     }
 
-    createNewUser(newUser: UserViewModel) {
+    async createNewUser(newUser: UserViewModel) {
 
-        const userList = this.userRepository.getUsers();
+        const userList = await this.userRepository.getUsers();
 
         const existingUser = userList.find(x => x.userName === newUser.userName);
 
@@ -25,8 +25,8 @@ export class UserService {
         return this.userRepository.createUser(newUser);
     }
 
-    attemptLogin(login: LoginViewModel) {
-        const userList = this.userRepository.getUsers();
+    async attemptLogin(login: LoginViewModel) {
+        const userList = await this.userRepository.getUsers();
 
         const foundLogin = userList
             .find(x =>
