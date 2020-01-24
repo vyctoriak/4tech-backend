@@ -10,8 +10,8 @@ export class AuthService {
                 private JwtService: JwtService) {
     }
 
-    login(login: LoginViewModel) {
-        const user = this.userService.attemptLogin(login);
+    async login(login: LoginViewModel) {
+        const user = await this.userService.attemptLogin(login);
 
         if (!user) {
             throw new BadRequestException('Incorret Credentials');

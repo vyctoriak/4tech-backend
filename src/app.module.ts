@@ -10,6 +10,8 @@ import { secretKey, JwtStrategy } from './services/auth/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './domain/schemas/user.schema';
+import { UserActivityController } from './controllers/user-activity/user-activity.controller';
+import { UserActivitySchema } from './domain/schemas/user-activity.schema';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { UserSchema } from './domain/schemas/user.schema';
     }),
     MongooseModule.forFeature([
       { name: 'User', schema: UserSchema },
+      { name: 'UserActivity', schema: UserActivitySchema }
     ]),
     JwtModule.register({
       secret: secretKey, signOptions: {
@@ -27,7 +30,7 @@ import { UserSchema } from './domain/schemas/user.schema';
       },
     })
   ],
-  controllers: [AppController, UserController, AuthController],
+  controllers: [AppController, UserController, AuthController, UserActivityController],
   providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy],
 })
 export class AppModule { }
