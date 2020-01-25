@@ -15,7 +15,6 @@ export class UserActivityController {
     @Get(':index')
     getRecentImages(
         @Param('index') index: string) {
-        // console.log(index)
         return this.userActivityService.getRecentUploads(index);
     }
 
