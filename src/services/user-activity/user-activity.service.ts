@@ -5,6 +5,9 @@ import { UserActivityCommentDto } from 'src/domain/dto/user-activity-comment.dto
 import { UserActivityRepository } from 'src/repositories/user-repository/user-activity-repository/user-activity-repository';
 import { UserActivity } from 'src/domain/schemas/user-activity.schema';
 import { readFileSync } from 'fs';
+import { LikeOrDislikeViewModel } from 'src/domain/schemas/like-or-dislike.viewmodel';
+import { throws } from 'assert';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class UserActivityService {
@@ -20,6 +23,29 @@ export class UserActivityService {
         const recentUploads = await this.userActivityRepository.getPaged(indexAsNumber); 
 
         return this.convertImagesToBase64(recentUploads);
+    }
+
+    async likeOrDislikeViewModel(likeOrDislikeViewModel: LikeOrDislikeViewModel) {
+        
+        const userActivity = await this.userActivityRepository.getById(likeOrDislikeViewModel.userActivityId);
+        if(!userActivity) {
+            throw new BadRequestException('An user Activity with the given id does not exist');
+        }
+
+        const user = await this.userRepository.getById(likeOrDislikeViewModel.userId);
+        if(!user) {
+            throw new BadRequestException('An user with the given id does not exist');
+        }
+        // console.log(userActivity);
+
+        if(userActivity.likes.includes(user._id.toString())) {
+            userActivity.likes = userActivity.likes.filter( x => x !== user._id);
+        } else {
+            userActivity.likes.push(user._id.toString());
+        }
+
+        return await this.userActivityRepository.update(userActivity);
+
     }
 
     async uploadImage(userId: string, filename: string, description: string) {

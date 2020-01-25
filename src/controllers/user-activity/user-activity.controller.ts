@@ -1,8 +1,9 @@
-import { Controller, UseGuards, UseInterceptors, UploadedFile, Body, Post, Get, Param } from '@nestjs/common';
+import { Controller, UseGuards, UseInterceptors, UploadedFile, Body, Post, Get, Param, Put } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserActivityService } from 'src/services/user-activity/user-activity.service';
+import { LikeOrDislikeViewModel } from 'src/domain/schemas/like-or-dislike.viewmodel';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('user-activity')
@@ -14,7 +15,7 @@ export class UserActivityController {
     @Get(':index')
     getRecentImages(
         @Param('index') index: string) {
-        console.log(index)
+        // console.log(index)
         return this.userActivityService.getRecentUploads(index);
     }
 
@@ -33,5 +34,10 @@ export class UserActivityController {
         @Body('description') description: string
     ) {
         return this.userActivityService.uploadImage(userId, file.originalname, description);
+    }
+
+    @Put('like-or-dislike')
+    likeOrDislikeUserActivity(@Body() LikeOrDislikeViewModel) {
+        return this.userActivityService.likeOrDislikeViewModel(LikeOrDislikeViewModel);
     }
 }

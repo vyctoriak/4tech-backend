@@ -16,7 +16,6 @@ const UserActivityCommentsSchema = new mongoose.Schema({
     userId: String,
     userName: String,
     fileName: String,
-    likes: [String],
     comment: String,
     timestamp: {
         type: Date,
@@ -29,6 +28,7 @@ export const UserActivitySchema = new mongoose.Schema({
     fileName: String,
     userName: String,
     comment: String,
+    likes: [String],
     timestamp: {
         type: Date,
         defauly: Date.now()

@@ -11,6 +11,15 @@ export class UserRepository {
 
     }
 
+    async getByCredentials(userLoginFromViewModel: string, passwordFromViewModel: string) {
+        return await this.userCollection
+            .findOne({ 
+            userLogin: userLoginFromViewModel,
+            password: passwordFromViewModel
+            })
+            .lean();
+    }
+
     async getById(id: string): Promise<User> {
         return await this.userCollection
         .findOne({ _id:id })
@@ -20,6 +29,7 @@ export class UserRepository {
     async getUsers(): Promise<User[]> {
         return await this.userCollection
         .find()
+        .select({ __v: false, password: false })
         .lean();
     }
 

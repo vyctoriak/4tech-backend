@@ -10,6 +10,12 @@ export class UserActivityRepository {
         @InjectModel('UserActivity') private readonly userActivityCollection: Model<UserActivity>) {
     }
 
+    async getById(id: string): Promise<UserActivity> {
+        return await this.userActivityCollection
+            .findOne({ _id: id })
+            .lean();
+    }
+
     async getPaged(index: number) {
         return await this.userActivityCollection
             .find()
@@ -22,5 +28,14 @@ export class UserActivityRepository {
     async create(userActivityDto: UserActivityDto) {
         const newUserActivity = this.userActivityCollection(userActivityDto);
         return await newUserActivity.save();
+    }
+
+    async update(userActivity: UserActivity) {
+        const updateActivity = await this.userActivityCollection.findOneAndUpdate(
+            { _id: userActivity._id },
+            userActivity,
+            { new: true });
+
+            return await updateActivity.save();
     }
 }
