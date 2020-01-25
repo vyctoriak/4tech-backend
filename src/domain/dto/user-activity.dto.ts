@@ -1,6 +1,6 @@
 import { UserActivityCommentDto } from './user-activity-comment.dto';
 
-export class UserActiviyDto {
+export class UserActivityDto {
     constructor(userId: string, fileName: string, userName: string) {
         this.userId = userId;
         this.userName = userName;

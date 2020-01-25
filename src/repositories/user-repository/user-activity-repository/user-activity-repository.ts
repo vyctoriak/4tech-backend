@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { UserActivity } from "src/domain/schemas/user-activity.schema";
 import { Model } from 'mongoose';
-import { UserActiviyDto } from "src/domain/dto/user-activity.dto";
+import { UserActivityDto } from "src/domain/dto/user-activity.dto";
 
 @Injectable()
 export class UserActivityRepository {
@@ -19,7 +19,7 @@ export class UserActivityRepository {
             .lean();
     }
 
-    async create(userActivityDto: UserActiviyDto) {
+    async create(userActivityDto: UserActivityDto) {
         const newUserActivity = this.userActivityCollection(userActivityDto);
         return await newUserActivity.save();
     }
