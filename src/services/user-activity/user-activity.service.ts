@@ -12,13 +12,14 @@ export class UserActivityService {
         private readonly userActivityRepository: UserActivityRepository) {
     }
 
-    getRecentUploads(index: string) {
+    async getRecentUploads(index: string) {
         const indexAsNumber = parseInt(index, 10);
         if(isNaN(indexAsNumber)) {
             throw new BadRequestException('Invalid Index');
         }
+        const recentUploads = await this.userActivityRepository.getPaged(indexAsNumber); 
 
-        return this.userActivityRepository.getPaged(indexAsNumber);
+        return this.convertImagesToBase64(recentUploads);
     }
 
     async uploadImage(userId: string, filename: string, description: string) {
@@ -45,7 +46,7 @@ export class UserActivityService {
             userActivities.map(userActivity => {
                 return {
                     ...userActivity,
-                    imgEncoded: readFileSync('../images/' + userActivity.filename, 'base64'),
+                    imgEncoded: readFileSync('../images/' + userActivity.fileName, 'base64'),
                 };
             }),
         );

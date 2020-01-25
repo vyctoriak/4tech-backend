@@ -23,6 +23,7 @@ export class UserActivityController {
         FileInterceptor('image', {
             storage: diskStorage({
                 destination: '../images',
+                filename: (req, file, callback) => { callback(null, file.originalname) }
             }),
         }),
     )
