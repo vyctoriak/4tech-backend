@@ -11,6 +11,12 @@ export class UserRepository {
 
     }
 
+    async getById(id: string): Promise<User> {
+        return await this.userCollection
+        .findOne({ _id:id })
+        .lean();
+    }
+
     async getUsers(): Promise<User[]> {
         return await this.userCollection
         .find()

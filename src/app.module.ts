@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './controllers/user/user.controller';
 import { UserService } from './services/user/user.service';
-import { UserRepository } from './repositories/user-repository/user-repository';
+import { UserRepository } from './repositories/user-repository/user-repository/user-repository';
 import { AuthController } from './controllers/auth/auth.controller';
 import { AuthService } from './services/auth/auth.service';
 import { secretKey, JwtStrategy } from './services/auth/jwt.strategy';
@@ -13,6 +13,7 @@ import { UserSchema } from './domain/schemas/user.schema';
 import { UserActivityController } from './controllers/user-activity/user-activity.controller';
 import { UserActivitySchema } from './domain/schemas/user-activity.schema';
 import { UserActivityService } from './services/user-activity/user-activity.service';
+import { UserActivityRepository } from './repositories/user-repository/user-activity-repository/user-activity-repository';
 
 @Module({
   imports: [
@@ -27,11 +28,11 @@ import { UserActivityService } from './services/user-activity/user-activity.serv
     ]),
     JwtModule.register({
       secret: secretKey, signOptions: {
-        expiresIn: '1m',
+        expiresIn: '10000m',
       },
     })
   ],
   controllers: [AppController, UserController, AuthController, UserActivityController],
-  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService],
+  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService, UserActivityRepository],
 })
 export class AppModule { }
